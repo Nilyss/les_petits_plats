@@ -1,0 +1,12 @@
+html,
+*,
+::before,
+::after {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Anton", sans-serif;
+  max-width: 1440px;
+}
+
+/*# sourceMappingURL=index.css.map */

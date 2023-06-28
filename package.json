@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "sass --watch ./front_end/public/styles/scss/:./front_end/public/styles/css/ & http-server ./front_end/ -o"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "sass": "^1.63.6"
+  }
+}

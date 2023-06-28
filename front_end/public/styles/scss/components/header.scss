@@ -1,0 +1,35 @@
+@use '../utils/variables' as var;
+
+header {
+  position: relative;
+  min-height: 667px;
+}
+
+// ********** BACKGROUND ********** //
+
+.backgroundWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.backgroundWrapper__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// ********** LOGO ********** //
+
+
+// ********** TITLE ********** //
+h1 {
+  cursor: default;
+  color: var.$h1FontColor;
+}
+
+// ********** SEARCH BAR ********** //
+
