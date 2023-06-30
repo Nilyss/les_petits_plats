@@ -3,6 +3,9 @@
 header {
   position: relative;
   min-height: 667px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
 }
 
 // ********** BACKGROUND ********** //
@@ -23,13 +26,70 @@ header {
 }
 
 // ********** LOGO ********** //
+.logoWrapper {
+  display: flex;
+  padding: 4em;
+}
 
+.logoWrapper__link {
+  display: flex;
+  width: 207px;
+}
+
+.logoWrapper__link__img {
+  width: 100%;
+  object-fit: cover;
+}
 
 // ********** TITLE ********** //
+header section {
+  transform: translateY(-75%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+}
+
 h1 {
+  text-align: center;
   cursor: default;
   color: var.$h1FontColor;
+  font-family: var.$titleFontFamily;
+  font-size: 44px;
+  padding: 0 8em 0 8em;
+  text-transform: uppercase;
 }
 
 // ********** SEARCH BAR ********** //
 
+header section label {
+  position: relative;
+}
+
+header section input {
+  width: 954px;
+  height: 72px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  padding-left: 4.5%;
+  font-family: var.$textFontFamily;
+  color: var.$textFontColor;
+}
+
+header section label span {
+  border-radius: 12px;
+  position: absolute;
+  top: 50%;
+  right: 1.25%;
+  transform: translateY(-50%);
+  background: var.$darkBackground;
+  width: 51px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
