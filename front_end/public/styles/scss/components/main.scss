@@ -1,0 +1,7 @@
+@use '../utils/variables' as var;
+
+main {
+  background: var.$mainBackground;
+  min-height: 100vh;
+  padding: 1.5em 6em;
+}

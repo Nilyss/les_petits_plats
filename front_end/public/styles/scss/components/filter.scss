@@ -1,0 +1,109 @@
+@use '../utils/variables' as var;
+
+#filter {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.numberOfRecipes {
+  position: absolute;
+  top: .5em;
+  right: 0;
+  font-size: 21px;
+  font-family: var.$titleFontFamily;
+  color: var.$textFontColor;
+}
+
+.filterWrapper {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 4em;
+}
+
+.filterWrapper__list {
+  list-style: none;
+  border-radius: 8px;
+  background: #ffffff;
+  width: 195px;
+  max-height: 315px;
+  overflow-y: scroll;
+  cursor: pointer;
+}
+
+.filterWrapper li div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+}
+
+h2 {
+  font-size: 16px;
+  font-family: var.$textFontFamily;
+  color: var.$textFontColor;
+  font-weight: 400;
+  margin-right: 4em;
+}
+
+.filterWrapper li nav {
+  margin-top: 1em;
+  display: none;
+}
+
+.filterWrapper__list:hover nav{
+    display: block;
+}
+
+.filterWrapper li nav label {
+  position: relative;
+  padding: 1em;
+}
+
+.filterWrapper li nav label input {
+  width: 163px;
+  height: 36px;
+  border: 1px solid var.$mainBackground;
+  border-radius: 2px;
+  padding: 0.5em;
+  outline: none;
+  color: var.$lightTextFontColor;
+  font-family: var.$textFontFamily;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.filterWrapper li nav label span {
+  position: absolute;
+  top: 45%;
+  right: 15%;
+  transform: translateY(-50%);
+  width: 13.5px;
+  height: 14px;
+}
+
+#filter ul li nav ul {
+  margin-top: 1em;
+  display: flex;
+  flex-flow: column;
+}
+
+#filter ul li nav ul li {
+
+  border-radius: unset;
+
+  &:hover {
+    background: var.$hoverBackground;
+    cursor: pointer;
+  }
+}
+
+#filter ul li nav ul li p {
+  padding: 1em;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: var.$textFontFamily;
+}
+

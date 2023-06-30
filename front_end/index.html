@@ -1,63 +1,169 @@
 <!-- Author: Nicolas DECRESSAC @2023 -->
 <!DOCTYPE html>
-<html lang='fr'>
+<html lang="fr">
   <head>
     <title>Les petits plats</title>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- CSS -->
-    <link rel='stylesheet' href='./public/styles/css/index.css'>
-    <link rel='stylesheet' href='./public/styles/css/components/header.css'>
+    <link rel="stylesheet" href="./public/styles/css/index.css" />
+    <link rel="stylesheet" href="./public/styles/css/components/header.css" />
+    <link rel="stylesheet" href="./public/styles/css/components/main.css" />
+    <link rel="stylesheet" href="./public/styles/css/components/card.css" />
+    <link rel="stylesheet" href="./public/styles/css/components/filter.css" />
 
     <!-- Google Fonts Anton -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Google Fonts Manrope -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header>
-      <figure class='backgroundWrapper'>
-        <img class='backgroundWrapper__img' src='./public/assets/images/bg.webp' alt='background'>
+      <figure class="backgroundWrapper">
+        <img
+          class="backgroundWrapper__img"
+          src="./public/assets/images/bg.webp"
+          alt="background"
+        />
       </figure>
-      <figure class='logoWrapper'>
-        <a class='logoWrapper__link' href='./index.html' title='Accueil'>
-          <img class='logoWrapper__link__img' src='./public/assets/images/logo.svg' alt='logo'>
+      <figure class="logoWrapper">
+        <a class="logoWrapper__link" href="./index.html" title="Accueil">
+          <img
+            class="logoWrapper__link__img"
+            src="./public/assets/images/logo.svg"
+            alt="logo"
+          />
         </a>
       </figure>
-      <section>
-        <h1>Cherchez parmi plus de 1500 recettes du quotidien,simples et délicieuses</h1>
-        <label for='searchBar'>
-          <input id='searchBar' type='text' placeholder='Rechercher une recette, un ingrédient, ...'>
+      <section id="searchRecipe">
+        <h1>
+          Cherchez parmi plus de 1500 recettes du quotidien,simples et
+          délicieuses
+        </h1>
+        <label for="searchBar">
+          <input
+            id="searchBar"
+            type="text"
+            placeholder="Rechercher une recette, un ingrédient, ..."
+          />
           <span>
-            <img src='./public/assets/icons/searchIcn.svg' alt='search icon'/>
+            <img src="./public/assets/icons/searchIcn.svg" alt="search icon" />
           </span>
         </label>
       </section>
     </header>
-    <main></main>
-    <footer></footer>
+    <main>
+      <section id="filter">
+        <ul class="filterWrapper">
+          <li class="filterWrapper__list">
+            <div>
+              <h2>Ingrédients</h2>
+              <span
+                ><img
+                  src="./public/assets/icons/arrowDown.svg"
+                  alt="arrow down"
+                />
+              </span>
+            </div>
+            <nav>
+              <label for="searchBar">
+                <input type="text" />
+                <span>
+                  <img
+                    src="./public/assets/icons/searchIcnAlt.svg"
+                    alt="search icon"
+                  />
+                </span>
+              </label>
+              <ul class="ingredientsWrapper">
+                <!-- JS Injection -->
+              </ul>
+            </nav>
+          </li>
+          <li class="filterWrapper__list">
+            <div>
+              <h2>Appareils</h2>
+              <span
+                ><img
+                  src="./public/assets/icons/arrowDown.svg"
+                  alt="arrow down"
+                />
+              </span>
+            </div>
+            <nav>
+              <label for="searchBar">
+                <input type="text" />
+                <span>
+                  <img
+                    src="./public/assets/icons/searchIcnAlt.svg"
+                    alt="search icon"
+                  />
+                </span>
+              </label>
+              <ul class="appliancesWrapper">
+                <!-- JS Injection -->
+              </ul>
+            </nav>
+          </li>
+          <li class="filterWrapper__list">
+            <div>
+              <h2>Ustensiles</h2>
+              <span
+                ><img
+                  src="./public/assets/icons/arrowDown.svg"
+                  alt="arrow down"
+                />
+              </span>
+            </div>
+            <nav>
+              <label for="searchBar">
+                <input type="text" />
+                <span>
+                  <img
+                    src="./public/assets/icons/searchIcnAlt.svg"
+                    alt="search icon"
+                  />
+                </span>
+              </label>
+              <ul class="ustensilsWrapper">
+                <!-- JS Injection -->
+              </ul>
+            </nav>
+          </li>
+        </ul>
+        <p class="numberOfRecipes"><!-- JS Injection --></p>
+      </section>
+    </main>
 
-  <!-- ********** JS ********** -->
+    <!-- ********** JS ********** -->
+    <!-- UTILS -->
+    <script src="./public/scripts/utils/Utils.js"></script>
+
     <!-- CONTROLLERS -->
-  <script src='./public/scripts/api/ApiCalls.js'></script>
+    <script src="./public/scripts/api/ApiCalls.js"></script>
 
     <!-- MODELS -->
-  <script src='./public/scripts/models/RecipeModel.js'></script>
+    <script src="./public/scripts/models/RecipeModel.js"></script>
 
     <!-- FACTORY -->
-  <script src='./public/scripts/factory/RecipeFactory.js'></script>
+    <script src="./public/scripts/factory/RecipeFactory.js"></script>
 
     <!-- SERVICES -->
-  <script src='./public/scripts/services/RecipeService.js'></script>
+    <script src="./public/scripts/services/RecipeService.js"></script>
 
     <!-- VIEWS -->
-  <script src='./public/scripts/views/Index.js'></script>
+    <script src="./public/scripts/views/Index.js"></script>
   </body>
 </html>
-
