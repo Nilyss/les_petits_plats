@@ -23,7 +23,6 @@ class Index extends Utils {
     if (this.recipes) {
       this.recipesWrapper = document.querySelector('.recipesWrapper')
       this.recipes.forEach((recipeData) => {
-        // console.log("recipe =>", recipeData)
         return this.recipeFactory.renderRecipe(recipeData, this.recipesWrapper)
       })
     }

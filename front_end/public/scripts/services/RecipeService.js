@@ -10,7 +10,6 @@ class RecipeService extends ApiCalls {
     if (this.recipes) return this.recipes
 
     const req = await this.fetch('/recipes.json')
-    console.log(req)
 
     // small logger to check the number of recipes fetched
     if (req) {
