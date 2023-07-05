@@ -19,7 +19,8 @@
 
 .filterWrapper {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row;
+  align-items: flex-start;
   gap: 4em;
 }
 
@@ -29,8 +30,14 @@
   background: #ffffff;
   width: 195px;
   max-height: 315px;
-  overflow-y: scroll;
   cursor: pointer;
+  overflow: auto;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
 }
 
 .filterWrapper li div {
@@ -48,13 +55,53 @@ h2 {
   margin-right: 4em;
 }
 
-.filterWrapper li nav {
+.toggle1, .toggle2, .toggle3 {
   margin-top: 1em;
   display: none;
 }
 
-.filterWrapper__list:hover nav{
+.arrowUp1, .arrowUp2, .arrowUp3 {
+  display: none;
+}
+
+.list1:hover {
+  .toggle1 {
     display: block;
+  }
+  .arrowUp1 {
+    display: block;
+  }
+  .arrowDown1 {
+    display: none;
+  }
+}
+
+.list2:hover {
+  .toggle2 {
+    display: block;
+  }
+  .arrowUp2 {
+    display: block;
+  }
+  .arrowDown2 {
+    display: none;
+  }
+}
+
+.list3:hover {
+  .toggle3 {
+    display: block;
+  }
+  .arrowUp3 {
+    display: block;
+  }
+  .arrowDown3 {
+    display: none;
+  }
+}
+
+.filterWrapper__list nav {
+  margin-top: -.3em;
 }
 
 .filterWrapper li nav label {
@@ -93,6 +140,7 @@ h2 {
 #filter ul li nav ul li {
 
   border-radius: unset;
+  margin-top: -.89em;
 
   &:hover {
     background: var.$hoverBackground;

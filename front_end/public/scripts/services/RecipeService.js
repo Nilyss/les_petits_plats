@@ -14,6 +14,10 @@ class RecipeService extends ApiCalls {
       this.recipeFactory.createRecipe(recipe)
     )
 
+    /* create a new array with all the ingredients, appliances and ustensils, without duplicates
+     toLowerCase() is used to avoid duplicates with different case
+     then capitalize the first letter of each first word
+    */
     function extractUniqueValues(recipes, targetArray, property) {
       const values = []
 
@@ -63,7 +67,12 @@ class RecipeService extends ApiCalls {
         }
       })
 
-      targetArray.push(...values)
+      // Change the case of first letters to uppercase
+      const capitalizedValues = values.map((item) => {
+        return item.charAt(0).toUpperCase() + item.slice(1);
+      });
+
+      targetArray.push(...capitalizedValues);
     }
 
     const ingredients = []

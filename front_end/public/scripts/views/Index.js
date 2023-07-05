@@ -18,7 +18,7 @@ class Index extends Utils {
     }
   }
 
-  async renderRecipes() {
+  async displayRecipes() {
     if (this.recipes) {
       // const test = document.querySelector('main');
       // this.recipes.forEach((recipe) => {
@@ -37,59 +37,30 @@ class Index extends Utils {
       const numberOfRecipes = this.recipes.length
       const numberOfRecipesElement = document.querySelector('.numberOfRecipes')
       const unsafeText = numberOfRecipes + ' recettes'
-      // remove the escapement for avoiding the html injection
+      /**
+       * Remove the escapement for avoiding the html injection
+       * @see Utils.js#safeText
+       */
       numberOfRecipesElement.innerHTML = await this.safeText(unsafeText)
     }
   }
 
-  async displayIngredients() {
-    if (this.ingredients) {
-      const ingredientsElement = document.querySelector('.ingredientsWrapper')
-      this.ingredients.forEach((ingredient) => {
-        const listItem = document.createElement('li')
-        const paragraph = document.createElement('p')
-        const ingredientText = document.createTextNode(ingredient)
-        paragraph.appendChild(ingredientText)
-        listItem.appendChild(paragraph)
-        ingredientsElement.appendChild(listItem)
-      })
-    }
-  }
-  async displayAppliances() {
-    if (this.appliances) {
-      const appliancesElement = document.querySelector('.appliancesWrapper')
-      this.appliances.forEach((appliance) => {
-        const listItem = document.createElement('li')
-        const paragraph = document.createElement('p')
-        const applianceText = document.createTextNode(appliance)
-        paragraph.appendChild(applianceText)
-        listItem.appendChild(paragraph)
-        appliancesElement.appendChild(listItem)
-      })
-    }
-  }
-
-  async displayUstensils() {
-    if (this.ustensils) {
-      const ustensilsElement = document.querySelector('.ustensilsWrapper')
-      this.ustensils.forEach((ustensil) => {
-        const listItem = document.createElement('li')
-        const paragraph = document.createElement('p')
-        const ustensilText = document.createTextNode(ustensil)
-        paragraph.appendChild(ustensilText)
-        listItem.appendChild(paragraph)
-        ustensilsElement.appendChild(listItem)
-      })
-    }
+  async displayFilters() {
+    /**
+     * @param {Array} items
+     * @returns {Promise<void>}
+     * @see Utils.js#displayFiltersItems
+     */
+    await this.displayFiltersItems(this.ingredients, 'ingredientsWrapper')
+    await this.displayFiltersItems(this.appliances, 'appliancesWrapper')
+    await this.displayFiltersItems(this.ustensils, 'ustensilsWrapper')
   }
 
   async render() {
     await this.getDatas()
-    await this.renderRecipes()
+    await this.displayRecipes()
     await this.displayNumberOfRecipes()
-    await this.displayIngredients()
-    await this.displayAppliances()
-    await this.displayUstensils()
+    await this.displayFilters()
   }
 }
 
