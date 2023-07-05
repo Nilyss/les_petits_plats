@@ -2,6 +2,7 @@ class Index extends Utils {
   constructor() {
     super()
     this.recipeService = new RecipeService()
+    this.recipeFactory = new RecipeFactory()
     this.recipes = null
     this.ingredients = null
     this.ustensils = null
@@ -20,15 +21,11 @@ class Index extends Utils {
 
   async displayRecipes() {
     if (this.recipes) {
-      // const test = document.querySelector('main');
-      // this.recipes.forEach((recipe) => {
-      //   console.log(recipe);
-      // TODO: NEW RECIPE CARD DIRECT FROM FACTORY
-      // const recipeCard = new RecipeCard(recipe);
-      // test.innerHTML += `
-      //   <p>${recipe.name}</p>
-      // `
-      // });
+      this.recipesWrapper = document.querySelector('.recipesWrapper')
+      this.recipes.forEach((recipeData) => {
+        // console.log("recipe =>", recipeData)
+        return this.recipeFactory.renderRecipe(recipeData, this.recipesWrapper)
+      })
     }
   }
 
