@@ -2,6 +2,8 @@ class Index extends Utils {
   constructor() {
     super()
     this.recipeService = new RecipeService()
+    this.filterFactory = new FilterFactory()
+    this.recipeFactory = new RecipeFactory()
     this.recipes = null
     this.ingredients = null
     this.ustensils = null
@@ -18,20 +20,6 @@ class Index extends Utils {
     }
   }
 
-  async displayRecipes() {
-    if (this.recipes) {
-      // const test = document.querySelector('main');
-      // this.recipes.forEach((recipe) => {
-      //   console.log(recipe);
-      // TODO: NEW RECIPE CARD DIRECT FROM FACTORY
-      // const recipeCard = new RecipeCard(recipe);
-      // test.innerHTML += `
-      //   <p>${recipe.name}</p>
-      // `
-      // });
-    }
-  }
-
   async displayNumberOfRecipes() {
     if (this.recipes) {
       const numberOfRecipes = this.recipes.length
@@ -45,22 +33,50 @@ class Index extends Utils {
     }
   }
 
-  async displayFilters() {
+  async displayFiltersList() {
     /**
      * @param {Array} items
-     * @returns {Promise<void>}
-     * @see Utils.js#displayFiltersItems
+     * @returns {Promise}
+     * @see FilterFactory.js#renderFilters
      */
-    await this.displayFiltersItems(this.ingredients, 'ingredientsWrapper')
-    await this.displayFiltersItems(this.appliances, 'appliancesWrapper')
-    await this.displayFiltersItems(this.ustensils, 'ustensilsWrapper')
+    await this.filterFactory.renderFilters(this.ingredients, 'ingredientsWrapper')
+    await this.filterFactory.renderFilters(this.appliances, 'appliancesWrapper')
+    await this.filterFactory.renderFilters(this.ustensils, 'ustensilsWrapper')
+  }
+
+  async displaySelectedFilters() {
+    /**
+     * @see FilterFactory.js#renderSelectedFilters
+     */
+    await this.filterFactory.renderSelectedFilters()
+  }
+
+  async displayRecipes() {
+    if (this.recipes) {
+      this.recipesWrapper = document.querySelector('.recipesWrapper')
+      this.recipes.forEach((recipeData) => {
+        /**
+         * @see RecipeFactory.js#renderRecipe
+         */
+        return this.recipeFactory.renderRecipe(recipeData, this.recipesWrapper)
+      })
+    }
+  }
+
+  async initEventListeners() {
+      // TODO :
+      // CHECK ON PAPER : ALGO
+      /** @see Utils.js#getFilterName
+       **/
   }
 
   async render() {
     await this.getDatas()
-    await this.displayRecipes()
+    await this.displayFiltersList()
     await this.displayNumberOfRecipes()
-    await this.displayFilters()
+    await this.displayRecipes()
+    await this.displaySelectedFilters()
+    await this.initEventListeners()
   }
 }
 

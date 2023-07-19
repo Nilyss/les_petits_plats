@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "sass --watch ./front_end/public/styles/scss/:./front_end/public/styles/css/ & http-server ./front_end/ -o"
+    "start": "sass --watch ./front_end/public/styles/scss/:./front_end/public/styles/css/ --style compressed & http-server ./front_end/ -o",
+    "sass" : "sass --watch ./front_end/public/styles/scss/:./front_end/public/styles/css/ --style compressed"
   },
   "devDependencies": {
     "http-server": "^14.1.1",

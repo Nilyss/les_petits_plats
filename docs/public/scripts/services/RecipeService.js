@@ -10,6 +10,14 @@ class RecipeService extends ApiCalls {
     if (this.recipes) return this.recipes
 
     const req = await this.fetch('/recipes.json')
+
+    // small logger to check the number of recipes fetched
+    if (req) {
+      let recipesLength = req.recipes.length
+      if (recipesLength === 0) return console.error('No recipes fetched')
+      console.log(`${recipesLength} recipes fetched`)
+    }
+
     this.recipes = req.recipes.map((recipe) =>
       this.recipeFactory.createRecipe(recipe)
     )
@@ -69,10 +77,10 @@ class RecipeService extends ApiCalls {
 
       // Change the case of first letters to uppercase
       const capitalizedValues = values.map((item) => {
-        return item.charAt(0).toUpperCase() + item.slice(1);
-      });
+        return item.charAt(0).toUpperCase() + item.slice(1)
+      })
 
-      targetArray.push(...capitalizedValues);
+      targetArray.push(...capitalizedValues)
     }
 
     const ingredients = []
@@ -91,7 +99,7 @@ class RecipeService extends ApiCalls {
       recipes: this.recipes,
       ingredients,
       appliances,
-      ustensils
+      ustensils,
     }
   }
 }

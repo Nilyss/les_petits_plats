@@ -5,13 +5,18 @@
     <title>Les petits plats</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name=description content="Les petits plats, le site de recettes de cuisine" />
+    <meta name='robots' content='index,follow' />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./public/assets/icons/favicon.ico" />
 
     <!-- CSS -->
     <link rel="stylesheet" href="./public/styles/css/index.css" />
     <link rel="stylesheet" href="./public/styles/css/components/header.css" />
     <link rel="stylesheet" href="./public/styles/css/components/main.css" />
-    <link rel="stylesheet" href="./public/styles/css/components/card.css" />
     <link rel="stylesheet" href="./public/styles/css/components/filter.css" />
+    <link rel="stylesheet" href="./public/styles/css/components/card.css" />
 
     <!-- Google Fonts Anton -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -70,20 +75,17 @@
           <li class="filterWrapper__list list1">
             <div>
               <h2>Ingrédients</h2>
-              <span class='arrowDown1'
-              ><img
-                src="./public/assets/icons/arrowDown.svg"
-                alt="arrow down"
-              />
+              <span class="arrowDown1"
+                ><img
+                  src="./public/assets/icons/arrowDown.svg"
+                  alt="arrow down"
+                />
               </span>
-              <span class='arrowUp1'
-              ><img
-                src="./public/assets/icons/arrowUp.svg"
-                alt="arrow up"
-              />
+              <span class="arrowUp1"
+                ><img src="./public/assets/icons/arrowUp.svg" alt="arrow up" />
               </span>
             </div>
-            <nav class='toggle1'>
+            <nav class="toggle1">
               <label for="searchBar">
                 <input type="text" />
                 <span>
@@ -94,27 +96,24 @@
                 </span>
               </label>
               <ul class="ingredientsWrapper injectedList">
-                <!-- JS Injection -->
+                <!-- JS Injection from FilterFactory.js(method) & Index.js(view) -->
               </ul>
             </nav>
           </li>
           <li class="filterWrapper__list list2">
             <div>
               <h2>Appareils</h2>
-              <span class='arrowDown2'
+              <span class="arrowDown2"
                 ><img
                   src="./public/assets/icons/arrowDown.svg"
                   alt="arrow down"
                 />
               </span>
-              <span class='arrowUp2'
-              ><img
-                src="./public/assets/icons/arrowUp.svg"
-                alt="arrow up"
-              />
+              <span class="arrowUp2"
+                ><img src="./public/assets/icons/arrowUp.svg" alt="arrow up" />
               </span>
             </div>
-            <nav class='toggle2'>
+            <nav class="toggle2">
               <label for="searchBar">
                 <input type="text" />
                 <span>
@@ -125,27 +124,24 @@
                 </span>
               </label>
               <ul class="appliancesWrapper injectedList">
-                <!-- JS Injection -->
+                <!-- JS Injection from FilterFactory.js(method) & Index.js(view) -->
               </ul>
             </nav>
           </li>
           <li class="filterWrapper__list list3">
             <div>
               <h2>Ustensiles</h2>
-              <span class='arrowDown3'
-              ><img
-                src="./public/assets/icons/arrowDown.svg"
-                alt="arrow down"
-              />
+              <span class="arrowDown3"
+                ><img
+                  src="./public/assets/icons/arrowDown.svg"
+                  alt="arrow down"
+                />
               </span>
-              <span class='arrowUp3'
-              ><img
-                src="./public/assets/icons/arrowUp.svg"
-                alt="arrow up"
-              />
+              <span class="arrowUp3"
+                ><img src="./public/assets/icons/arrowUp.svg" alt="arrow up" />
               </span>
             </div>
-            <nav class='toggle3'>
+            <nav class="toggle3">
               <label for="searchBar">
                 <input type="text" />
                 <span>
@@ -156,12 +152,22 @@
                 </span>
               </label>
               <ul class="ustensilsWrapper injectedList">
-                <!-- JS Injection -->
+                <!-- JS Injection from FilterFactory.js(method) & Index.js(view) -->
               </ul>
             </nav>
           </li>
         </ul>
-        <p class="numberOfRecipes"><!-- JS Injection --></p>
+        <p class="numberOfRecipes"><!-- JS Injection from Utils.js (for security against html injection) --></p>
+      </section>
+      <section id='selectedFilters'>
+        <ul class="selectedFiltersWrapper">
+          <!-- JS Injection from FilterFactory.js(method) & Index.js(view) -->
+        </ul>
+      </section>
+      <section id="recipes">
+        <ul class="recipesWrapper">
+          <!-- JS Injection from RecipeFactory.js(method) & Index.js(view) -->
+        </ul>
       </section>
     </main>
 
@@ -176,6 +182,7 @@
     <script src="./public/scripts/models/RecipeModel.js"></script>
 
     <!-- FACTORY -->
+    <script src="./public/scripts/factory/FilterFactory.js"></script>
     <script src="./public/scripts/factory/RecipeFactory.js"></script>
 
     <!-- SERVICES -->
