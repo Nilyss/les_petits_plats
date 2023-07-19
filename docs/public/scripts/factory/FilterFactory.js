@@ -1,5 +1,7 @@
 class FilterFactory {
-  constructor() {}
+  constructor() {
+    this.selectedFilter = []
+  }
 
   async renderFilters(items, wrapperClass) {
     if (items) {
@@ -17,18 +19,27 @@ class FilterFactory {
   }
 
   async renderSelectedFilters() {
-    let selectedFilter = []
-
     const selectedFilterSection = document.querySelector('#selectedFilters')
     const filter = document.querySelectorAll('.filterElement')
     filter.forEach((element) => {
       const selectFilter = (element) => {
         const selectedElement = element.target.textContent
-        if (!selectedFilter.includes(selectedElement)) {
 
-          // Add the filter to the list, then display it
-          selectedFilter.push(selectedElement)
+        if (!this.selectedFilter.includes(selectedElement)) {
+          // Add the filter to the list
+          this.selectedFilter.push(selectedElement)
 
+          // change the style of the filter in select list and add a close btn
+          element.target.classList.add('selectedFilter')
+          const closeIconElementWrapper = document.createElement('figure')
+          const closeIconElement = document.createElement('img')
+          closeIconElement.src = './public/assets/icons/listCross.svg'
+          closeIconElement.alt = 'close icon'
+          closeIconElement.className = 'selectedFiltersWrapper__list__closeIcn'
+          closeIconElementWrapper.appendChild(closeIconElement)
+          element.target.appendChild(closeIconElementWrapper)
+
+          // create the new filter button then display it in dom
           const selectedFilterWrapper = document.querySelector(
             '.selectedFiltersWrapper'
           )
@@ -48,16 +59,27 @@ class FilterFactory {
           closeIconWrapper.appendChild(closeIcon)
           filterButton.appendChild(closeIconWrapper)
 
-          //  Remove the filter from the DOM then remove it from the list of selected filters
-          closeIcon.addEventListener("click", () => {
-            filterButton.remove();
-            selectedFilter.splice(selectedFilter.indexOf(selectedElement), 1);
-          });
-
           selectedFilterWrapper.appendChild(filterButton)
           selectedFilterSection.appendChild(selectedFilterWrapper)
+
+          //  Remove the filter from the DOM then remove it from the list of selected filters, and remove the style in the select list
+          const removeElement = (event) => {
+            event.stopPropagation()
+            filterButton.remove()
+            this.selectedFilter.splice(
+              this.selectedFilter.indexOf(selectedElement),
+              1
+            )
+            element.target.classList.remove('selectedFilter')
+            closeIconElementWrapper.remove()
+          }
+
+
+          closeIcon.addEventListener('click', removeElement)
+          closeIconElementWrapper.addEventListener('click', removeElement)
         }
       }
+
       element.addEventListener('click', selectFilter)
     })
   }
