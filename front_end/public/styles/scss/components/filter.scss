@@ -1,17 +1,17 @@
 @use '../utils/variables' as var;
 
+// ******************** FILTER SECTION ********************
+
 #filter {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
-  position: relative;
 }
 
 .numberOfRecipes {
-  position: absolute;
-  top: .5em;
-  right: 0;
+  position: relative;
+  top: 0.5em;
   font-size: 21px;
   font-family: var.$titleFontFamily;
   color: var.$textFontColor;
@@ -22,29 +22,45 @@
   flex-flow: row;
   align-items: flex-start;
   gap: 4em;
+  position: relative;
 }
 
 .filterWrapper__list {
+  position: absolute;
+  top: -1em;
+  z-index: 999;
   list-style: none;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #ffffff;
   width: 195px;
   max-height: 315px;
   cursor: pointer;
   overflow: auto;
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
     width: 0;
     display: none;
   }
 }
 
+.list1 {
+  left: 0;
+}
+
+.list2 {
+  left: 16em;
+}
+
+.list3 {
+  left: 32em;
+}
+
 .filterWrapper li div {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1em;
+  padding: 1.3em 1em 1.3em 1em;
 }
 
 h2 {
@@ -55,12 +71,16 @@ h2 {
   margin-right: 4em;
 }
 
-.toggle1, .toggle2, .toggle3 {
+.toggle1,
+.toggle2,
+.toggle3 {
   margin-top: 1em;
   display: none;
 }
 
-.arrowUp1, .arrowUp2, .arrowUp3 {
+.arrowUp1,
+.arrowUp2,
+.arrowUp3 {
   display: none;
 }
 
@@ -101,7 +121,7 @@ h2 {
 }
 
 .filterWrapper__list nav {
-  margin-top: -.3em;
+  margin-top: -0.3em;
 }
 
 .filterWrapper li nav label {
@@ -138,9 +158,8 @@ h2 {
 }
 
 #filter ul li nav ul li {
-
   border-radius: unset;
-  margin-top: -.89em;
+  margin-top: -0.89em;
 
   &:hover {
     background: var.$hoverBackground;
@@ -155,3 +174,44 @@ h2 {
   font-family: var.$textFontFamily;
 }
 
+// ******************** SELECTED FILTER SECTION ********************
+
+.selectedFiltersWrapper {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 2em;
+}
+
+.selectedFiltersWrapper__list {
+  list-style: none;
+  margin-top: 3.5em;
+  margin-bottom: -1em;
+  background: var.$hoverBackground;
+  border-radius: 12px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.8em 1em 1.8em 1em;
+  gap: 2em;
+  width: 203px;
+  height: 53px;
+}
+
+.selectedFiltersWrapper__list__text {
+  font-family: var.$textFontFamily;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.selectedFiltersWrapper__list figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectedFiltersWrapper__list__closeIcn {
+  filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, 0.50));
+  cursor: pointer;
+}
