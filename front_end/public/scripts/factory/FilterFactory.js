@@ -1,6 +1,7 @@
 class FilterFactory {
   constructor() {
     this.selectedFilter = []
+    this.recipes = null
   }
 
   async renderFilters(items, wrapperClass) {
@@ -72,15 +73,35 @@ class FilterFactory {
             )
             element.target.classList.remove('selectedFilter')
             closeIconElementWrapper.remove()
+            this.displayFilteredRecipes(false)
           }
-
 
           closeIcon.addEventListener('click', removeElement)
           closeIconElementWrapper.addEventListener('click', removeElement)
         }
-      }
 
+        this.displayFilteredRecipes(true)
+      }
       element.addEventListener('click', selectFilter)
     })
+  }
+  async displayFilteredRecipes(isFiltered) {
+    const recipeService = new RecipeService()
+    const recipeFactory = new RecipeFactory()
+    const recipeWrapper = document.querySelector('.recipesWrapper')
+    recipeWrapper.innerHTML = ''
+    if (isFiltered) {
+      this.recipes = await recipeService.getRecipesByFilter(this.selectedFilter)
+      this.recipes.forEach((recipe) => {
+        recipeFactory.renderRecipe(recipe, recipeWrapper)
+      })
+    }
+    if (!isFiltered) {
+      const getRecipesDatas = await recipeService.getRecipes()
+      this.recipes = getRecipesDatas.recipes
+      this.recipes.forEach((recipeData) => {
+        recipeFactory.renderRecipe(recipeData, recipeWrapper)
+      })
+    }
   }
 }

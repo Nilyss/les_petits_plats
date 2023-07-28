@@ -20,17 +20,23 @@ class Index extends Utils {
     }
   }
 
-  async displayNumberOfRecipes() {
-    if (this.recipes) {
-      const numberOfRecipes = this.recipes.length
-      const numberOfRecipesElement = document.querySelector('.numberOfRecipes')
-      const unsafeText = numberOfRecipes + ' recettes'
-      /**
-       * Remove the escapement for avoiding the html injection
-       * @see Utils.js#safeText
-       */
-      numberOfRecipesElement.innerHTML = await this.safeText(unsafeText)
+  async displayNumberOfRecipes(recipesBySearch) {
+    const numberOfRecipesElement = document.querySelector('.numberOfRecipes')
+    let numberOfRecipes
+    if (recipesBySearch) {
+      numberOfRecipes = recipesBySearch.length
+    } else if (this.recipes) {
+      numberOfRecipes = this.recipes.length
+    } else {
+      return // No recipes or recipesBySearch provided, nothing to display.
     }
+
+    /**
+     * Remove the escapement for avoiding the html injection
+     * @see Utils.js#safeText
+     */
+    const unsafeText = numberOfRecipes + ' recettes'
+    numberOfRecipesElement.innerHTML = await this.safeText(unsafeText)
   }
 
   async displayFiltersList() {
@@ -39,7 +45,10 @@ class Index extends Utils {
      * @returns {Promise}
      * @see FilterFactory.js#renderFilters
      */
-    await this.filterFactory.renderFilters(this.ingredients, 'ingredientsWrapper')
+    await this.filterFactory.renderFilters(
+      this.ingredients,
+      'ingredientsWrapper'
+    )
     await this.filterFactory.renderFilters(this.appliances, 'appliancesWrapper')
     await this.filterFactory.renderFilters(this.ustensils, 'ustensilsWrapper')
   }
@@ -51,23 +60,38 @@ class Index extends Utils {
     await this.filterFactory.renderSelectedFilters()
   }
 
-  async displayRecipes() {
-    if (this.recipes) {
-      this.recipesWrapper = document.querySelector('.recipesWrapper')
-      this.recipes.forEach((recipeData) => {
-        /**
-         * @see RecipeFactory.js#renderRecipe
-         */
-        return this.recipeFactory.renderRecipe(recipeData, this.recipesWrapper)
+  async displayRecipes(recipesBySearch) {
+    this.recipesWrapper = document.querySelector('.recipesWrapper')
+    const recipesToDisplay = recipesBySearch || this.recipes
+
+    /**
+     * @see RecipeFactory.js#renderRecipe
+     */
+    if (recipesToDisplay) {
+      this.recipesWrapper.innerHTML = ''
+      recipesToDisplay.forEach((recipeData) => {
+        this.recipeFactory.renderRecipe(recipeData, this.recipesWrapper)
       })
     }
   }
 
   async initEventListeners() {
-      // TODO :
-      // CHECK ON PAPER : ALGO
-      /** @see Utils.js#getFilterName
-       **/
+    const searchInput = document.querySelector('.searchBar')
+    const search = async (e) => {
+      if (e.target.value.length > 2) {
+        const matchedRecipe = await this.recipeService.findRecipesBySearch(
+          e.target.value
+        )
+        await this.displayRecipes(matchedRecipe)
+        await this.displayNumberOfRecipes(matchedRecipe)
+      }
+      if (e.target.value.length === 0) {
+        await this.displayRecipes()
+        await this.displayNumberOfRecipes()
+      }
+    }
+
+    searchInput.addEventListener('input', search)
   }
 
   async render() {

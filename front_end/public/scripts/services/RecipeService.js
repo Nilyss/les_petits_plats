@@ -3,6 +3,7 @@ class RecipeService extends ApiCalls {
     super()
     this.recipes = null
     this.recipeFactory = new RecipeFactory()
+    this.filterFactory = new FilterFactory()
   }
 
   // ********** GET METHOD **********
@@ -100,6 +101,37 @@ class RecipeService extends ApiCalls {
       ingredients,
       appliances,
       ustensils,
+    }
+  }
+
+  async findRecipesBySearch(search) {
+    this.recipes = await this.getRecipes()
+    const matchedRecipes = []
+
+    if (this.recipes) {
+      this.recipes.forEach((recipe) => {
+        const { name, appliance, ingredients, ustensils } = recipe
+        const lowerCaseSearch = search.toLowerCase()
+
+        const isMatched =
+          name.toLowerCase().includes(lowerCaseSearch) ||
+          appliance.toLowerCase().includes(lowerCaseSearch) ||
+          ingredients.some((ingredient) =>
+            ingredient.ingredient.toLowerCase().includes(lowerCaseSearch)
+          ) ||
+          ustensils.some((utensil) =>
+            utensil.toLowerCase().includes(lowerCaseSearch)
+          )
+
+        if (isMatched) {
+          matchedRecipes.push(recipe)
+          return matchedRecipes.map((recipe) =>
+            this.recipeFactory.createRecipe(recipe)
+          )
+        }
+      })
+
+      return matchedRecipes
     }
   }
 }
