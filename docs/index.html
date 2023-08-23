@@ -5,11 +5,18 @@
     <title>Les petits plats</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name=description content="Les petits plats, le site de recettes de cuisine" />
-    <meta name='robots' content='index,follow' />
+    <meta
+      name="description"
+      content="Les petits plats, le site de recettes de cuisine"
+    />
+    <meta name="robots" content="index,follow" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="./public/assets/icons/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="./public/assets/icons/favicon.ico"
+    />
 
     <!-- CSS -->
     <link rel="stylesheet" href="./public/styles/css/index.css" />
@@ -60,6 +67,7 @@
         <label for="searchBar">
           <input
             id="searchBar"
+            class="searchBar"
             type="text"
             placeholder="Rechercher une recette, un ingrédient, ..."
           />
@@ -157,9 +165,11 @@
             </nav>
           </li>
         </ul>
-        <p class="numberOfRecipes"><!-- JS Injection from Utils.js (for security against html injection) --></p>
+        <p class="numberOfRecipes">
+          <!-- JS Injection from Utils.js (for security against html injection) -->
+        </p>
       </section>
-      <section id='selectedFilters'>
+      <section id="selectedFilters">
         <ul class="selectedFiltersWrapper">
           <!-- JS Injection from FilterFactory.js(method) & Index.js(view) -->
         </ul>

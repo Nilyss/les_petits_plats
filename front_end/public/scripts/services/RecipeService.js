@@ -102,4 +102,33 @@ class RecipeService extends ApiCalls {
       ustensils,
     }
   }
+
+  async findRecipesBySearch(search) {
+    this.recipes = await this.getRecipes()
+
+    let matchedRecipes = []
+    for (let i = 0; i < this.recipes.length; i++) {
+      const recipe = this.recipes[i];
+      const { name, appliance, ingredients, ustensils } = recipe
+
+      const lowerCaseSearch = search.toLowerCase()
+
+      const isMatched =
+        name.toLowerCase().includes(lowerCaseSearch) ||
+        appliance.toLowerCase().includes(lowerCaseSearch) ||
+        ingredients.some((ingredient) =>
+          ingredient.ingredient.toLowerCase().includes(lowerCaseSearch)
+        ) ||
+        ustensils.some((utensil) =>
+          utensil.toLowerCase().includes(lowerCaseSearch)
+        )
+      if (isMatched) {
+        matchedRecipes.push(recipe)
+      }
+    }
+
+    return matchedRecipes.map((recipe) => {
+      return this.recipeFactory.createRecipe(recipe)
+    })
+  }
 }
