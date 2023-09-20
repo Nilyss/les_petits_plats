@@ -63,7 +63,6 @@ class Index extends Utils {
   async displayRecipes(recipesBySearch) {
     this.recipesWrapper = document.querySelector('.recipesWrapper')
     const recipesToDisplay = recipesBySearch || this.recipes
-
     /**
      * @see RecipeFactory.js#renderRecipe
      */
@@ -90,7 +89,6 @@ class Index extends Utils {
         await this.displayNumberOfRecipes()
       }
     }
-
     searchInput.addEventListener('input', search)
   }
 

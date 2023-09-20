@@ -104,23 +104,36 @@ class RecipeService extends ApiCalls {
     }
   }
 
-  async findRecipesBySearch(search) {
-    this.recipes = await this.getRecipes()
+  async findRecipesByFilters(selectedFilters, currentRecipeList) {
+    let recipes
     const matchedRecipes = []
 
-    if (this.recipes) {
-      this.recipes.forEach((recipe) => {
-        const { name, appliance, ingredients, ustensils } = recipe
-        const lowerCaseSearch = search.toLowerCase()
+    // if recipes already filtered, compare filter from filtered recipes
+    // else, fetch all recipes and compare then to filter
+
+    if (selectedFilters.length >= 2) {
+      recipes = currentRecipeList
+      // keep only the last filter from Array, the currentRecipeList is already filtered
+      selectedFilters.splice(0, selectedFilters.length - 1)
+    } else {
+      const req = await this.getRecipes()
+      recipes = req.recipes
+    }
+
+    if (recipes) {
+      recipes.forEach((recipe) => {
+        const { appliance, ingredients, ustensils } = recipe
+        const lowerCaseFilters = selectedFilters.map((filter) =>
+          filter.toLowerCase()
+        )
 
         const isMatched =
-          name.toLowerCase().includes(lowerCaseSearch) ||
-          appliance.toLowerCase().includes(lowerCaseSearch) ||
+          appliance.toLowerCase().includes(lowerCaseFilters) ||
           ingredients.some((ingredient) =>
-            ingredient.ingredient.toLowerCase().includes(lowerCaseSearch)
+            ingredient.ingredient.toLowerCase().includes(lowerCaseFilters)
           ) ||
           ustensils.some((utensil) =>
-            utensil.toLowerCase().includes(lowerCaseSearch)
+            utensil.toLowerCase().includes(lowerCaseFilters)
           )
 
         if (isMatched) {
@@ -131,7 +144,42 @@ class RecipeService extends ApiCalls {
         }
       })
 
+      const index = new Index()
+      await index.displayRecipes(matchedRecipes)
+      await index.displayNumberOfRecipes(matchedRecipes)
       return matchedRecipes
+    }
+  }
+
+  async findRecipesBySearch(search) {
+    if (search) {
+      this.recipes = await this.getRecipes()
+      const matchedRecipes = []
+      if (this.recipes) {
+        this.recipes.forEach((recipe) => {
+          const { name, appliance, ingredients, ustensils } = recipe
+          const lowerCaseSearch = search.toLowerCase()
+
+          const isMatched =
+            name.toLowerCase().includes(lowerCaseSearch) ||
+            appliance.toLowerCase().includes(lowerCaseSearch) ||
+            ingredients.some((ingredient) =>
+              ingredient.ingredient.toLowerCase().includes(lowerCaseSearch)
+            ) ||
+            ustensils.some((utensil) =>
+              utensil.toLowerCase().includes(lowerCaseSearch)
+            )
+
+          if (isMatched) {
+            matchedRecipes.push(recipe)
+            return matchedRecipes.map((recipe) =>
+              this.recipeFactory.createRecipe(recipe)
+            )
+          }
+        })
+
+        return matchedRecipes
+      }
     }
   }
 }

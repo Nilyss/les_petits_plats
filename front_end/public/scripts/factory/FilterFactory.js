@@ -1,7 +1,7 @@
 class FilterFactory {
   constructor() {
     this.selectedFilter = []
-    this.recipes = null
+    this.recipes = []
   }
 
   async renderFilters(items, wrapperClass) {
@@ -19,31 +19,45 @@ class FilterFactory {
     }
   }
 
+  async displayRecipesByFilter() {
+    const recipeService = new RecipeService()
+
+    if (this.selectedFilter.length >= 2) {
+      return await recipeService.findRecipesByFilters(
+        this.selectedFilter,
+        this.recipes
+      )
+    } else {
+      this.recipes = await recipeService.findRecipesByFilters(
+        this.selectedFilter
+      )
+    }
+  }
+
   async renderSelectedFilters() {
+    let filters = [...this.selectedFilter]
     const selectedFilterSection = document.querySelector('#selectedFilters')
+    const selectedFilterWrapper = document.querySelector(
+      '.selectedFiltersWrapper'
+    )
     const filter = document.querySelectorAll('.filterElement')
+
     filter.forEach((element) => {
-      const selectFilter = (element) => {
-        const selectedElement = element.target.textContent
+      const selectFilter = () => {
+        const selectedElement = element.textContent.trim()
 
-        if (!this.selectedFilter.includes(selectedElement)) {
-          // Add the filter to the list
-          this.selectedFilter.push(selectedElement)
+        if (!filters.includes(selectedElement)) {
+          filters = [...filters, selectedElement]
 
-          // change the style of the filter in select list and add a close btn
-          element.target.classList.add('selectedFilter')
+          element.classList.add('selectedFilter')
           const closeIconElementWrapper = document.createElement('figure')
           const closeIconElement = document.createElement('img')
           closeIconElement.src = './public/assets/icons/listCross.svg'
           closeIconElement.alt = 'close icon'
           closeIconElement.className = 'selectedFiltersWrapper__list__closeIcn'
           closeIconElementWrapper.appendChild(closeIconElement)
-          element.target.appendChild(closeIconElementWrapper)
+          element.appendChild(closeIconElementWrapper)
 
-          // create the new filter button then display it in dom
-          const selectedFilterWrapper = document.querySelector(
-            '.selectedFiltersWrapper'
-          )
           const filterButton = document.createElement('li')
           filterButton.className = 'selectedFiltersWrapper__list'
 
@@ -62,46 +76,67 @@ class FilterFactory {
 
           selectedFilterWrapper.appendChild(filterButton)
           selectedFilterSection.appendChild(selectedFilterWrapper)
-
-          //  Remove the filter from the DOM then remove it from the list of selected filters, and remove the style in the select list
-          const removeElement = (event) => {
-            event.stopPropagation()
-            filterButton.remove()
-            this.selectedFilter.splice(
-              this.selectedFilter.indexOf(selectedElement),
-              1
-            )
-            element.target.classList.remove('selectedFilter')
-            closeIconElementWrapper.remove()
-            this.displayFilteredRecipes(false)
-          }
-
-          closeIcon.addEventListener('click', removeElement)
-          closeIconElementWrapper.addEventListener('click', removeElement)
         }
 
-        this.displayFilteredRecipes(true)
+        this.selectedFilter = [...filters]
+        this.displayRecipesByFilter()
+        this.removeSelectedFilter(filters)
       }
+
       element.addEventListener('click', selectFilter)
     })
   }
-  async displayFilteredRecipes(isFiltered) {
-    const recipeService = new RecipeService()
-    const recipeFactory = new RecipeFactory()
-    const recipeWrapper = document.querySelector('.recipesWrapper')
-    recipeWrapper.innerHTML = ''
-    if (isFiltered) {
-      this.recipes = await recipeService.getRecipesByFilter(this.selectedFilter)
-      this.recipes.forEach((recipe) => {
-        recipeFactory.renderRecipe(recipe, recipeWrapper)
+
+  async removeSelectedFilter(filters) {
+    const filterRemoveButtons = document.querySelectorAll(
+      '.selectedFiltersWrapper__list__closeIcn'
+    )
+
+    filterRemoveButtons.forEach((button) => {
+      button.addEventListener('click', (event) => {
+        console.log('clicked')
+        event.stopPropagation()
+        // const filterListItem = button.closest('.selectedFiltersWrapper__list');
+
+        const filterList = document.querySelectorAll(
+          '.selectedFiltersWrapper__list'
+        )
+        filterList.forEach((filterListItem) => {
+          if (
+            filterListItem.textContent ===
+            button.parentNode.parentNode.textContent
+          ) {
+            const filterText = filterListItem
+              .querySelector('.selectedFiltersWrapper__list__text')
+              .textContent.trim()
+
+            filterListItem.remove()
+
+            const index = filters.findIndex(
+              (filter) =>
+                filter.toLowerCase().trim() === filterText.toLowerCase().trim()
+            )
+
+            if (index !== -1) {
+              filters.splice(index, 1)
+            }
+
+            const selectedElement = document.querySelector('.selectedFilter')
+            if (selectedElement) {
+              selectedElement.classList.remove('selectedFilter')
+              const closeIconElement = selectedElement.querySelector(
+                '.selectedFiltersWrapper__list__closeIcn'
+              )
+              if (closeIconElement) {
+                closeIconElement.remove()
+              }
+            }
+
+            this.selectedFilter = filters
+            this.displayRecipesByFilter()
+          }
+        })
       })
-    }
-    if (!isFiltered) {
-      const getRecipesDatas = await recipeService.getRecipes()
-      this.recipes = getRecipesDatas.recipes
-      this.recipes.forEach((recipeData) => {
-        recipeFactory.renderRecipe(recipeData, recipeWrapper)
-      })
-    }
+    })
   }
 }
