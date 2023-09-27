@@ -18,6 +18,21 @@ class FilterFactory {
     }
   }
 
+  async displayRecipesByFilter() {
+    const recipeService = new RecipeService()
+
+    if (this.selectedFilter.length >= 2) {
+      return await recipeService.findRecipesByFilters(
+        this.selectedFilter,
+        this.recipes
+      )
+    } else {
+      this.recipes = await recipeService.findRecipesByFilters(
+        this.selectedFilter
+      )
+    }
+  }
+
   async renderSelectedFilters() {
     const selectedFilterSection = document.querySelector('#selectedFilters')
     const filter = document.querySelectorAll('.filterElement')
@@ -72,12 +87,13 @@ class FilterFactory {
             )
             element.target.classList.remove('selectedFilter')
             closeIconElementWrapper.remove()
+            this.displayRecipesByFilter()
           }
-
 
           closeIcon.addEventListener('click', removeElement)
           closeIconElementWrapper.addEventListener('click', removeElement)
         }
+        this.displayRecipesByFilter()
       }
 
       element.addEventListener('click', selectFilter)
