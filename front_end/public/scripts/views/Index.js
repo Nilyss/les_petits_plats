@@ -2,6 +2,7 @@ class Index extends Utils {
   constructor() {
     super()
     this.recipeService = new RecipeService()
+    this.findFiltersService = new FindFiltersService()
     this.filterFactory = new FilterFactory()
     this.recipeFactory = new RecipeFactory()
     this.recipes = null
@@ -75,6 +76,17 @@ class Index extends Utils {
     }
   }
 
+  async searchFilters() {
+    /**
+     * @see FindFiltersService.js#findIngredients
+     * @see FindFiltersService.js#findAppliances
+     * @see FindFiltersService.js#findUstensils
+     */
+    await this.findFiltersService.findIngredients()
+    await this.findFiltersService.findAppliances()
+    await this.findFiltersService.findUstensils()
+  }
+
   async initEventListeners() {
     const searchInput = document.querySelector('.searchBar')
     const search = async (e) => {
@@ -90,7 +102,6 @@ class Index extends Utils {
         await this.displayNumberOfRecipes()
       }
     }
-
     searchInput.addEventListener('input', search)
   }
 
@@ -100,6 +111,7 @@ class Index extends Utils {
     await this.displayNumberOfRecipes()
     await this.displayRecipes()
     await this.displaySelectedFilters()
+    await this.searchFilters()
     await this.initEventListeners()
   }
 }
