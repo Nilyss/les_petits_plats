@@ -30,8 +30,10 @@ class FilterFactory {
         this.recipes
       )
     } else {
+      const filteredRecipes = JSON.parse(sessionStorage.getItem('matchedRecipes'))
       this.recipes = await recipeService.findRecipesByFilters(
-        this.selectedFilter
+        this.selectedFilter,
+        filteredRecipes
       )
     }
   }

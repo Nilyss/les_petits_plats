@@ -105,13 +105,16 @@ class RecipeService extends ApiCalls {
   }
 
   async findRecipesByFilters(selectedFilters, currentRecipeList) {
+
+    console.log(currentRecipeList)
+
     let recipes
     const matchedRecipes = []
 
     // if recipes already filtered, compare filter from filtered recipes
     // else, fetch all recipes and compare then to filter
 
-    if (selectedFilters.length >= 2) {
+    if (selectedFilters.length >= 2 || currentRecipeList) {
       recipes = currentRecipeList
       // keep only the last filter from Array, the currentRecipeList is already filtered
       selectedFilters.splice(0, selectedFilters.length - 1)
@@ -124,7 +127,7 @@ class RecipeService extends ApiCalls {
       recipes.forEach((recipe) => {
         const { appliance, ingredients, ustensils } = recipe
         const lowerCaseFilters = selectedFilters.map((filter) =>
-          filter.toLowerCase()
+              filter.toLowerCase()
         )
 
         const isMatched =
@@ -178,6 +181,7 @@ class RecipeService extends ApiCalls {
           }
         })
 
+        sessionStorage.setItem('matchedRecipes', JSON.stringify(matchedRecipes))
         return matchedRecipes
       }
     }
